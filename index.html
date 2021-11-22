@@ -8,6 +8,8 @@
     <title>Document</title>
     <link rel="stylesheet" href="res/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="res/css/timeline.css">
+    <link rel="manifest" href="js13kpwa.webmanifest">
     <style>
         .tx-banner {
             border-bottom-right-radius: 30px;
@@ -19,35 +21,37 @@
         .tx-icon{
             font-size: 3rem;
         }
-        .border-gudang{
+        .bg-gudang{
             border: 2px solid dimgray;
-            border-left: 10px solid dimgray;
+            background-color: dimgray;
         }
 
-        .border-sablon{
-            border: 2px solid #4730E9;
-            border-left: 10px solid #4730E9;
+        .bg-sablon{
+            background-color: #4730E9;
         }
 
-        .border-potong{
-            border: 2px solid #286b2c;
-            border-left: 10px solid #286b2c;
+        .bg-potong{
+            background-color: #286b2c;
         }
 
-        .border-jahit{
-            border: 2px solid #F40E0C;
-            border-left: 10px solid #F40E0C;
+        .bg-jahit{
+            background-color: #F40E0C;
         }
 
-        .border-bordir{
-            border: 2px solid #7b2ed3;
-            border-left: 10px solid #7b2ed3;
+        .bg-bordir{
+            background-color: #7b2ed3;
         }
 
-        .border-packing{
-            border: 2px solid rgb(88, 29, 29);
-            border-left: 10px solid rgb(88, 29, 29);
+        .bg-packing{
+            background-color: rgb(88, 29, 29);
         }
+
+        .tx-resi-title{
+            margin-top: 0.4rem;
+            margin-bottom: -0.4rem;
+        }
+
+        
     </style>
 </head>
 
@@ -55,16 +59,23 @@
     <div class="container-fluid p-0">
         <div class="container p-0">
             <div class="container-fluid bg-dark text-white p-2 text-end sticky-top">
-                <span class="d-block fs-4">Login <i class="bi bi-person fs-4"></i></span>
+                <div class="d-flex bd-highlight">
+                    <div class="p-1 flex-fill bd-highlight text-start">
+                        <button class="btn btn-outline-light" onclick="toggle_menu()"><i class="bi bi-list"></i> Menu</button>
+                    </div>
+                    <div class="p-1 flex-fill bd-highlight">
+                        <button class="btn btn-outline-light"><i class="bi bi-person"></i> Login</button>
+                    </div>
+                </div>
             </div>
-            <div class="container-fluid text-white py-3 px-2 text-center tx-banner" style="background-color: #4730E9;">
+            <div class="container-fluid text-white py-3 px-2 text-center tx-banner bg-primary">
                 <i class="d-block tx-icon bi bi-palette2 "></i>
                 <span class="d-block fs-3 py-2">Textile Preview</span>
             </div>
             <div class="container-fluid" id="tx-menu">
                 <div class="row g-3 p-3">
                     <div class="col-12 col-md-4">
-                        <button class="btn tx-navbutton shadow w-100 text-white" onclick="load_resi()" style="background-color: #E1027C;">
+                        <button class="btn tx-navbutton shadow w-100 text-white" onclick="load_page('resi')" style="background-color: #E1027C;">
                             <i class="d-block tx-icon bi bi-truck "></i>
                             <span class="d-block fs-4 py-2">Cek Resi</span>
                         </button>
@@ -88,7 +99,7 @@
                         </button>
                     </div>
                     <div class="col-6 col-md-4">
-                        <button class="btn tx-navbutton shadow w-100 text-white" onclick="load_gudang()" style="background-color: #4730E9;">
+                        <button class="btn tx-navbutton shadow w-100 text-white" onclick="load_page('sablon')" style="background-color: #4730E9;">
                             <i class="d-block tx-icon bi bi-paint-bucket "></i>
                             <span class="d-block fs-4 py-2">Sablon</span>
                         </button>
@@ -107,199 +118,8 @@
                     </div>
                 </div>
             </div>
-            <div class="container-fluid p-3" id="tx-resi">
-                <span class="d-block text-white fs-2 rounded p-3 mb-2" style="background-color: #E1027C;">Resi : TXT394</span>
-                <span class="d-block text-white fs-5 rounded p-3 mb-2" style="background-color: #E1027C;">
-                    <table class="table text-white">
-                        <tr>
-                            <td>Nama</td>
-                            <td>Ajinomoto</td>
-                        </tr>
-                        <tr>
-                            <td>Jumlah</td>
-                            <td>600</td>
-                        </tr>
-                    </table>
-                </span>
-                <div class="col-12 border-gudang my-1 rounded">
-                    <span class="d-block fs-1 text-uppercase fw-bold px-1 py-2 text-white" style="background-color: dimgray;">GUDANG</span>
-                    <div class="row fs-3 text-uppercase fw-bold p-3 py-1">
-                        <div class="col-auto p-2 py-1">
-                            <span class="d-block">Lokasi</span>
-                        </div>
-                        <div class="col p-2 py-1">
-                            <span class="d-block">GUDANG-1</span>
-                        </div>
-                    </div>
-                    <div class="row fs-3 text-uppercase fw-bold p-3 py-1">
-                        <div class="col-auto p-2 py-1">
-                            <span class="d-block">Jumlah</span>
-                        </div>
-                        <div class="col p-2 py-1">
-                            <span class="d-block">600</span>
-                        </div>
-                    </div>
-                    <div class="row fs-3 text-uppercase fw-bold p-4 py-1">
-                        <div class="col bg-success text-white p-2 py-1 rounded">
-                            <span class="d-block text-center">SELESAI</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 border-potong my-1 rounded">
-                    <span class="d-block fs-1 text-uppercase fw-bold px-1 py-2 text-white" style="background-color: #286b2c;">POTONG</span>
-                    <div class="row fs-3 text-uppercase fw-bold p-3 py-1">
-                        <div class="col-auto p-2 py-1">
-                            <span class="d-block">Lokasi</span>
-                        </div>
-                        <div class="col p-2 py-1">
-                            <span class="d-block">POTONG-3</span>
-                        </div>
-                    </div>
-                    <div class="row fs-3 text-uppercase fw-bold p-3 py-1">
-                        <div class="col-auto p-2 py-1">
-                            <span class="d-block">Jumlah</span>
-                        </div>
-                        <div class="col p-2 py-1">
-                            <span class="d-block">600</span>
-                        </div>
-                    </div>
-                    <div class="row fs-3 text-uppercase fw-bold p-4 py-1">
-                        <div class="col bg-success text-white p-2 py-1 rounded">
-                            <span class="d-block text-center">SELESAI</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 border-jahit my-1 rounded">
-                    <span class="d-block fs-1 text-uppercase fw-bold px-1 py-2 text-white" style="background-color: #F40E0C;">JAHIT</span>
-                    <div class="row fs-3 text-uppercase fw-bold p-3 py-1">
-                        <div class="col-auto p-2 py-1">
-                            <span class="d-block">Lokasi</span>
-                        </div>
-                        <div class="col p-2 py-1">
-                            <span class="d-block">JAHIT-3</span>
-                        </div>
-                    </div>
-                    <div class="row fs-3 text-uppercase fw-bold p-3 py-1">
-                        <div class="col-auto p-2 py-1">
-                            <span class="d-block">Jumlah</span>
-                        </div>
-                        <div class="col p-2 py-1">
-                            <span class="d-block">300</span>
-                        </div>
-                    </div>
-                    <div class="row fs-3 text-uppercase fw-bold p-4 py-1">
-                        <div class="col bg-danger text-white p-2 py-1 rounded">
-                            <span class="d-block text-center">PROCESSING</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 border-bordir my-1 rounded">
-                    <span class="d-block fs-1 text-uppercase fw-bold px-1 py-2 text-white" style="background-color: #7b2ed3;">Bordir</span>
-                    <div class="row fs-3 text-uppercase fw-bold p-3 py-1">
-                        <div class="col-auto p-2 py-1">
-                            <span class="d-block">Lokasi</span>
-                        </div>
-                        <div class="col p-2 py-1">
-                            <span class="d-block">BORDIR-2</span>
-                        </div>
-                    </div>
-                    <div class="row fs-3 text-uppercase fw-bold p-3 py-1">
-                        <div class="col-auto p-2 py-1">
-                            <span class="d-block">Jumlah</span>
-                        </div>
-                        <div class="col p-2 py-1">
-                            <span class="d-block">300</span>
-                        </div>
-                    </div>
-                    <div class="row fs-3 text-uppercase fw-bold p-4 py-1">
-                        <div class="col bg-danger text-white p-2 py-1 rounded">
-                            <span class="d-block text-center">PROCESSING</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="container-fluid p-3" id="tx-gudang">
-                <span class="d-block rounded fs-1 text-uppercase fw-bold px-1 py-2 text-white text-center" style="background-color: #4730E9;">SABLON</span>
-                <input class="form-control form-control-lg" type="text" placeholder="Pencarian">
-                <div class="col-12 border-sablon my-1 rounded">
-                    <div class="row fs-3 text-uppercase fw-bold p-3 py-1">
-                        <div class="col-auto p-2 py-1">
-                            <span class="d-block">RESI</span>
-                        </div>
-                        <div class="col p-2 py-1">
-                            <span class="d-block">TX-33E</span>
-                        </div>
-                    </div>
-                    <div class="row fs-3 text-uppercase fw-bold p-3 py-1">
-                        <div class="col-auto p-2 py-1">
-                            <span class="d-block">NAMA</span>
-                        </div>
-                        <div class="col p-2 py-1">
-                            <span class="d-block">AJINOMOTO</span>
-                        </div>
-                    </div>
-                    <div class="row fs-3 text-uppercase fw-bold p-3 py-1">
-                        <div class="col-auto p-2 py-1">
-                            <span class="d-block">Lokasi</span>
-                        </div>
-                        <div class="col p-2 py-1">
-                            <span class="d-block">SABLON-1</span>
-                        </div>
-                    </div>
-                    <div class="row fs-3 text-uppercase fw-bold p-3 py-1">
-                        <div class="col-auto p-2 py-1">
-                            <span class="d-block">Jumlah</span>
-                        </div>
-                        <div class="col p-2 py-1">
-                            <span class="d-block">600</span>
-                        </div>
-                    </div>
-                    <div class="row fs-3 text-uppercase fw-bold p-4 py-1">
-                        <div class="col bg-success text-white p-2 py-1 rounded">
-                            <span class="d-block text-center">SELESAI</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 border-sablon my-1 rounded">
-                    <span class="d-block fs-1 text-uppercase fw-bold px-1 py-2 text-white" style="background-color: #4730E9;">POTONG</span>
-                    <div class="row fs-3 text-uppercase fw-bold p-3 py-1">
-                        <div class="col-auto p-2 py-1">
-                            <span class="d-block">RESI</span>
-                        </div>
-                        <div class="col p-2 py-1">
-                            <span class="d-block">TX-2SS</span>
-                        </div>
-                    </div>
-                    <div class="row fs-3 text-uppercase fw-bold p-3 py-1">
-                        <div class="col-auto p-2 py-1">
-                            <span class="d-block">NAMA</span>
-                        </div>
-                        <div class="col p-2 py-1">
-                            <span class="d-block">SEMEN GRESIK</span>
-                        </div>
-                    </div>
-                    <div class="row fs-3 text-uppercase fw-bold p-3 py-1">
-                        <div class="col-auto p-2 py-1">
-                            <span class="d-block">Lokasi</span>
-                        </div>
-                        <div class="col p-2 py-1">
-                            <span class="d-block">SABLON-3</span>
-                        </div>
-                    </div>
-                    <div class="row fs-3 text-uppercase fw-bold p-3 py-1">
-                        <div class="col-auto p-2 py-1">
-                            <span class="d-block">Jumlah</span>
-                        </div>
-                        <div class="col p-2 py-1">
-                            <span class="d-block">600</span>
-                        </div>
-                    </div>
-                    <div class="row fs-3 text-uppercase fw-bold p-4 py-1">
-                        <div class="col bg-danger text-white p-2 py-1 rounded">
-                            <span class="d-block text-center">PROCESSING</span>
-                        </div>
-                    </div>
-                </div>
+            <div class="container-fluid p-3" id="selected">
+                
             </div>
         </div>
     </div>
@@ -307,29 +127,24 @@
 <script src="res/js/bootstrap.min.js"></script>
 <script src="res/js/jquery-3.6.0.min.js"></script>
 <script>
+    $(document).ready(function(){
+        $("#selected").slideToggle(300)
+    })
 
-    toggle_resi()
-    toggle_gudang()
-    function load_resi(){
-        toggle_menu()
-        toggle_resi()
-    }
-
-    function load_gudang(){
-        toggle_menu()
-        toggle_gudang()
+    function load_page(page){
+        $("#tx-menu").slideToggle(300)
+        if(page == 'resi'){
+            $("#selected").load("pages/resi.html")
+        }
+        else if(page == "sablon"){
+            $("#selected").load("pages/sablon.html")
+        }
+        $("#selected").slideToggle(300)
     }
 
     function toggle_menu(){
         $("#tx-menu").slideToggle(300)
-    }
-
-    function toggle_resi(){
-        $("#tx-resi").slideToggle(300)
-    }
-
-    function toggle_gudang(){
-        $("#tx-gudang").slideToggle(300)
+        $("#selected").slideToggle(300)
     }
 </script>
 </html>
