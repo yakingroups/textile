@@ -22,7 +22,6 @@
             font-size: 3rem;
         }
         .bg-gudang{
-            border: 2px solid dimgray;
             background-color: dimgray;
         }
 
@@ -30,7 +29,7 @@
             background-color: #4730E9;
         }
 
-        .bg-potong{
+        .bg-pemotongan{
             background-color: #286b2c;
         }
 
@@ -46,12 +45,24 @@
             background-color: rgb(88, 29, 29);
         }
 
+        .bg-resi{
+            background-color: #E1027C;
+        }
+
+        .bg-textile{
+            background-color: darkblue;
+        }
+
         .tx-resi-title{
             margin-top: 0.4rem;
             margin-bottom: -0.4rem;
         }
 
-        
+        /* animate current locatio when the item and background color changes */
+        #current-location{
+            animation: current-location 1s ease-in-out;
+            transition: 0.5s;
+        }
     </style>
 </head>
 
@@ -68,9 +79,9 @@
                     </div>
                 </div>
             </div>
-            <div class="container-fluid text-white py-3 px-2 text-center tx-banner bg-primary">
-                <i class="d-block tx-icon bi bi-palette2 "></i>
-                <span class="d-block fs-3 py-2">Textile Preview</span>
+            <div class="container-fluid text-white py-3 px-2 text-center tx-banner bg-primary" id="current-location">
+                <i class="d-block tx-icon bi bi-palette" id="current-location-icon"></i>
+                <span class="d-block fs-3 py-2" id="current-location-text">Textile Preview</span>
             </div>
             <div class="container-fluid" id="tx-menu">
                 <div class="row g-3 p-3">
@@ -81,19 +92,19 @@
                         </button>
                     </div>
                     <div class="col-6 col-md-4">
-                        <button class="btn tx-navbutton shadow w-100 text-white" style="background-color: dimgray;">
+                        <button class="btn tx-navbutton shadow w-100 text-white" onclick="load_page('gudang')"  style="background-color: dimgray;">
                             <i class="d-block tx-icon bi bi-boxes "></i>
                             <span class="d-block fs-4 py-2">Gudang</span>
                         </button>
                     </div>
                     <div class="col-6 col-md-4">
-                        <button class="btn tx-navbutton shadow w-100 text-white" style="background-color: #286b2c;">
+                        <button class="btn tx-navbutton shadow w-100 text-white" onclick="load_page('pemotongan')" style="background-color: #286b2c;">
                             <i class="d-block tx-icon bi bi-scissors "></i>
                             <span class="d-block fs-4 py-2">Pemotongan</span>
                         </button>
                     </div>
                     <div class="col-6 col-md-4">
-                        <button class="btn tx-navbutton shadow w-100 text-white" style="background-color: #F40E0C;">
+                        <button class="btn tx-navbutton shadow w-100 text-white" onclick="load_page('jahit')" style="background-color: #F40E0C;">
                             <i class="d-block tx-icon bi bi-pin "></i>
                             <span class="d-block fs-4 py-2">Jahit</span>
                         </button>
@@ -105,13 +116,13 @@
                         </button>
                     </div>
                     <div class="col-6 col-md-4">
-                        <button class="btn tx-navbutton shadow w-100 text-white" style="background-color: #7b2ed3;">
+                        <button class="btn tx-navbutton shadow w-100 text-white" onclick="load_page('bordir')" style="background-color: #7b2ed3;">
                             <i class="d-block tx-icon bi bi-palette2 "></i>
                             <span class="d-block fs-4 py-2">Bordir</span>
                         </button>
                     </div>
                     <div class="col-6 col-md-4">
-                        <button class="btn tx-navbutton shadow w-100 text-white" style="background-color: rgb(88, 29, 29);">
+                        <button class="btn tx-navbutton shadow w-100 text-white" onclick="load_page('packing')" style="background-color: rgb(88, 29, 29);">
                             <i class="d-block tx-icon bi bi-box"></i>
                             <span class="d-block fs-4 py-2">Packing</span>
                         </button>
@@ -127,24 +138,65 @@
 <script src="res/js/bootstrap.min.js"></script>
 <script src="res/js/jquery-3.6.0.min.js"></script>
 <script>
+    var icon_list = {
+        "resi": "bi bi-truck",
+        "gudang": "bi bi-boxes",
+        "sablon": "bi bi-paint-bucket",
+        "pemotongan": "bi bi-scissors",
+        "jahit": "bi bi-pin",
+        "bordir": "bi bi-palette2",
+        "packing": "bi bi-box",
+        "resi": "bi bi-truck",
+        "textile": "bi bi-palette"
+    }
+
     $(document).ready(function(){
         $("#selected").slideToggle(300)
     })
 
     function load_page(page){
         $("#tx-menu").slideToggle(300)
+        change_location(page)
+        $("#selected").html("")
         if(page == 'resi'){
             $("#selected").load("pages/resi.html")
         }
         else if(page == "sablon"){
             $("#selected").load("pages/sablon.html")
         }
+        else if(page == "gudang"){
+            $("#selected").load("pages/gudang.html")
+        }
+        else if(page == "potong"){
+            $("#selected").load("pages/potong.html")
+        }
+        else if(page == "jahit"){
+            $("#selected").load("pages/jahit.html")
+        }
+        else if(page == "bordir"){
+            $("#selected").load("pages/bordir.html")
+        }
+        else if(page == "packing"){
+            $("#selected").load("pages/packing.html")
+        }
         $("#selected").slideToggle(300)
+    }
+
+    function change_location(location){
+        $("#current-location").html('')
+        //remove class with bg prefix
+        $("#current-location").removeClass(function (index, css) {
+            return (css.match (/(^|\s)bg-\S+/g) || []).join(' ');
+        });
+        $("#current-location").addClass('bg-' + location)
+        $("#current-location").append('<i class="d-block tx-icon ' + icon_list[location] + '" id="current-location-icon"></i>')
+        $("#current-location").append(`<span class="d-block fs-3 py-2 text-capitalize" id="current-location-text">${location}</span>`)
     }
 
     function toggle_menu(){
         $("#tx-menu").slideToggle(300)
         $("#selected").slideToggle(300)
+        change_location('textile')
     }
 </script>
 </html>
